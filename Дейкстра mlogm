@@ -1,0 +1,26 @@
+
+vector<ll> d; //init INF
+vector<int> p; // массив предков
+vector<vector<pll>> g;
+
+void Dijkstra(int s)
+{
+	d[s] = 0;
+	set<pair<ll, ll>> q;
+	q.insert({ d[s], s });
+	while (!q.empty())
+	{
+		int v = q.begin()->second;
+		q.erase(q.begin());
+		for (auto to : g[v])
+		{
+			if (d[v] + to.second < d[to.first])
+			{
+				q.erase({ d[to.first],to.first });
+				d[to.first] = d[v] + to.second;
+				p[to.first] = v;
+				q.insert({ d[to.first],to.first });
+			}
+		}
+	}
+}
